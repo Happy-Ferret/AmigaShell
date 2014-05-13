@@ -23,11 +23,11 @@ download and install
 amigashell-2.3.tar.gz
 amigashell-2.3.tar.bz2
 
-(be root)
-make install
-amigashell start
-cd /etc/rc2.d
-ln -s ../init.d/amigashell S99amigashell
+    (be root)
+    make install
+    amigashell start
+    cd /etc/rc2.d
+    ln -s ../init.d/amigashell S99amigashell
 
 changelog
 old versions
