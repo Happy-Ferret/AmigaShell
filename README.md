@@ -1,4 +1,4 @@
-This script was formerly at [here](http://gnu.ethz.ch/linuks.mine.nu/amiga/), but the page seems to have disappeared.
+This script was formerly [here](http://gnu.ethz.ch/linuks.mine.nu/amiga/), but the page seems to have disappeared.
 
 The [FreeCode page](http://freecode.com/projects/amigashell) of the project.
 
