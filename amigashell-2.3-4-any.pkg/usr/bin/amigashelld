@@ -1,0 +1,57 @@
+#!/bin/bash
+#!/usr/local/bin/bash
+h=`head -1 $0`
+prefshell=`basename $h`
+
+case $prefshell in
+    bash)
+	shprint="echo -ne"
+	post=""
+    ;;
+    ash)
+	shprint="echo"
+	post="\c"
+    ;;
+    *)
+    ;;
+esac
+
+#terminals to use you can change that according to your needs
+terms=`seq 1 1`
+ver=`uname -r`
+
+blue="0044aa"
+orange="ee8800"
+white="ffffff"
+black="000000"
+#first reset palette to default, then you can set colors 0 .. f (0 .. 15)
+for a in $terms; do
+   $shprint "\033]R\033]P0${blue}\033]P4${blue}\033]P6${orange}\033]P7${white}${post}" > /dev/tty$a
+done
+
+uname |grep -i "bsd" > /dev/null
+if [ "$?" = 0 ]; then
+   while(sleep 1); do
+      set -- `sysctl hw.usermem`
+      mem=$2
+      set -- `sysctl vm.loadavg |awk '{print $NF-3}' |sed "s/,//"`
+      cpu=$1
+      timdat=`date "+%H:%M:%S %d/%m/%y"`
+
+      s="\033[?0;0;0c\033[s\033[1;1H\033[30;47m Workbench release $ver   ${mem}k free mem   ${cpu} cpu   ${timdat}\033[K\033[40;37m\033[u\033[?17;8;63c${post}"
+      $shprint $s
+   done
+else
+while (sleep 1); do
+   set -- `free -k |grep -i "mem"`
+   mem=$4
+   set -- `cat /proc/loadavg`
+   cpu=$1
+   timdat=`date "+%H:%M:%S %d/%m/%y"`
+
+   s="\033[?0;0;0c\033[s\033[1;1H\033[30;47m Workbench release $ver   ${mem}k free mem   ${cpu} cpu   ${timdat}\033[K\033[40;37m\033[u\033[?17;8;63c${post}"
+   for a in $terms; do
+      $shprint $s > /dev/tty$a
+   done
+done
+fi

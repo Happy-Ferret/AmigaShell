@@ -1,0 +1,103 @@
+#!/bin/sh
+
+NAME="amigashell"
+DESC="amigashell"
+#terminals to work on, change as you need
+from="1"
+to="6"
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+
+	#man console_codes
+	#\033[0q 0clearall,1scroll,2num,3caps
+
+	if [ ! -z $DISPLAY ]; then
+	   echo "$NAME does not work in X."
+	   echo "If you however make it work for X (font or colors or something),"
+	   echo "send me the updates to gnu@fuckmicrosoft.com"
+	   #also send me pictures of your (nude?) sister or something
+	   exit
+	fi
+
+	#apt-get install consolechars (not sure though)
+	fontset=`which consolechars`
+	if [ ! $? = 0 ]; then fontset=`which setfont`; else fontset=$fontset" -f "; fi
+	#if [ ! $? = 0 ]; then echo install setfont or consolechars; exit; fi
+
+	killall amigashelld
+
+	#apt-get install svgatextmode (then edit /etc/TextConfig)
+	#search for horizsync set to 30-50 and vertrefresh to 50-90
+	#lspci/xviddetect might help you find out what videocard you've got
+	textmode=`which SVGATextMode`
+	if [ $? = 0 ]; then
+	   #uncomment following line for a more characters
+	   #SVGATextMode -x 100x37 >/dev/null
+	   #SVGATextMode -x 100x37_VGA >/dev/null
+           sleep 0
+	fi
+
+	$fontset /usr/share/amigashell/amigashell.fnt
+        for a in `seq $from $to`; do
+	   consolechars -f /usr/share/amigashell/amigashell.fnt --tty=/dev/tty$a
+	done
+
+	uname |grep -i "bsd" > /dev/null && (
+	   setvgacolor 0 0 17 48   #background
+	   setvgacolor 7 63 63 63  #fontcolor
+	   setvgacolor 6 59 34 0   #cursor
+	   vidcontrol -f /usr/share/amigashell/amigashell.fnt < /dev/ttyv0
+	)
+
+	/usr/bin/amigashelld & disown
+	clear
+	echo
+	echo "Copyright (C)1987 Commodore-Amiga, Inc."
+	echo "All rights reserved."
+	echo "Release 1.3"
+	echo "A500/A2000 F Workbench disk.  Release 1.3 version 34.69"
+	echo
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+
+	#you might want to use -R (on sparc)
+	consolechars -d
+	#SVGATextMode -x
+	killall amigashelld
+
+	uname |grep -i "bsd" > /dev/null && (
+ 	   setvgacolor 0 0 0 0
+	   setvgacolor 7 42 42 42
+	   setvgacolor 6 
+	   vidcontrol -f iso < /dev/ttyv0
+	)
+
+        for a in `seq $from $to`; do
+	   echo -e "\033]R\033[?0;0;0c" > /dev/tty$a
+	done
+
+	echo "$NAME."
+	;;
+  status)
+	ps aux |grep -v grep |grep -v status |grep -i amigashell >/dev/null
+	if [ "$?" = "0" ]; then
+	    echo "$NAME running."
+	else
+	    echo "$NAME not running."
+	fi
+  ;;
+  restart)
+	$NAME stop
+	$NAME start
+  ;;
+  *)
+	N=/etc/rc.d/$NAME
+	echo "Usage: $N {start|stop|status|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
