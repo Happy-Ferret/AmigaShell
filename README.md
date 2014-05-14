@@ -4,6 +4,16 @@ The [FreeCode page](http://freecode.com/projects/amigashell) of the project.
 
 (amigashell-2.3-4-any.pkg.tar.xz is the Arch Linux AUR package salvaged with bacman.)
 
+## Usage
+
+Start with
+
+    systemctl start amigashell.service
+
+Run automatically at boot with
+
+    systemctl enable amigashell.service
+
 ### Originial description follows (from [archive.org](https://web.archive.org/web/20120106063129/http://gnu.ethz.ch/linuks.mine.nu/amiga/) )
 
 AmigaSHELL makes your boring gray on black colored
