@@ -1,10 +1,9 @@
 [Unit]
 Description=Amiga shell lookalike
-After=network.target
+After=systemd-getty.slice
 
 [Service]
 Type=forking
-User=root
 ExecStart=/usr/bin/amigashell start
 ExecStop=/usr/bin/amigashell stop
 Restart=always
