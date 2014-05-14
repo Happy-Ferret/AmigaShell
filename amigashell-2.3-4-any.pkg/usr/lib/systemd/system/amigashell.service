@@ -1,0 +1,13 @@
+[Unit]
+Description=Amiga shell lookalike
+After=network.target
+
+[Service]
+Type=forking
+User=root
+ExecStart=/usr/bin/amigashell start
+ExecStop=/usr/bin/amigashell stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

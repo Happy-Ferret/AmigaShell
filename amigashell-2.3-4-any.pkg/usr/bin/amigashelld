@@ -1,5 +1,4 @@
-#!/bin/bash
-#!/usr/local/bin/bash
+#!/usr/bin/bash
 h=`head -1 $0`
 prefshell=`basename $h`
 
@@ -17,7 +16,7 @@ case $prefshell in
 esac
 
 #terminals to use you can change that according to your needs
-terms=`seq 1 1`
+terms=`seq 1 6`
 ver=`uname -r`
 
 blue="0044aa"
