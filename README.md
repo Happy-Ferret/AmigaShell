@@ -1,3 +1,5 @@
+![screenshot](https://github.com/mdoege/AmigaShell/raw/master/screenshot.png)
+
 This script was formerly [here](http://gnu.ethz.ch/linuks.mine.nu/amiga/), but the page seems to have disappeared.
 
 The [FreeCode page](http://freecode.com/projects/amigashell) of the project.
