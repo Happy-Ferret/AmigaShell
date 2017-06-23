@@ -22,7 +22,7 @@ For the full experience, put
 
 in your ~/.bashrc file.
     
-### Originial description
+### Original description
 
 Also see reconstructed original HTML page in "html_archived/" directory;
 based on [archive.org](https://web.archive.org/web/20120106063129/http://gnu.ethz.ch/linuks.mine.nu/amiga/)
